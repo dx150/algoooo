@@ -1,0 +1,179 @@
+/* ---sum of distincts elements ---*/
+
+
+ /* ---solution 1 using arrays---*/
+
+
+ALGORITHM Sum_distinct
+VAR
+    set1 : ARRAY_OF INTEGER[]
+    set2 : ARRAY_OF INTEGER[]
+    i, j :INTEGER;
+    sum_dist : INTEGER:=0;
+    
+
+BEGIN
+  Write("give the  first set of elemtent");
+   Read(set1);
+   Write("give the second set of elemtent");
+   Read(set2);
+
+   for (i=0, i<set1.length , i++)
+   j==0 
+   while (set1[i]<>set2[j] && j<set2.length)
+   j++
+   if (j==set2.length)
+   sum_dist+=set1[i];
+   end if
+   end for
+   for (j=0, j<set2.length , j++)
+   i==0 
+   while (set2[j]<>set1[i] && i<set1.length)
+   i++
+   if (i==set1.length)
+   sum_dist+= set2[j];
+   end if
+   end for
+   write("The sum of two distincts sets of elements: ", sum_dist);
+   end
+
+
+
+
+  
+/* --- solution 2 using hash-table ---*/
+
+
+ALGORITHM hash_table
+VAR
+   htab : HASH_TABLE<INTEGER,INTEGER>;
+
+    set1 : ARRAY_OF INTEGER[]
+    set2 : ARRAY_OF INTEGER[]
+     i, j : INTEGER;
+     sum_dist:INTEGER:=0
+
+BEGIN
+
+        Write("give the  first set of elemtent");
+        Read(set1);
+        Write("give the second set of elemtent");
+        Read(set2);
+
+
+        FOR i FROM 0 TO set1.length-1 STEP 1  DO
+                htab.insert(set1[i],1); 
+        END_FOR
+        
+        FOR j FROM 0 TO set2.length-1 STEP 1  DO
+                IF (htab.lookup(set2[j])) THEN
+                        htab.insert(set2[j], 2)
+                ELSE
+                        htab.insert(set2[j], 1)
+                END_IF
+        END_FOR
+
+        FOR i FROM 0 TO set1.length-1 STEP 1  DO
+                IF (htab.get(set1[i])=1) THEN
+                       sum_dist := sum_dist + set1[i]
+                END_IF
+        END_FOR
+        FOR j FROM 0 TO set2.length-1 STEP 1  DO
+                IF (htab.get(set2[j])=1) THEN
+                        sum_dist := sum_dist + set2[j]
+                END_IF
+        END_FOR
+
+
+         write("The sum of two distincts sets of elements: ", sum_dist);
+END
+
+
+
+
+
+
+
+/* ---sum of overlapping elements ---*/
+
+
+ /* ---solution 3 using arrays---*/
+
+
+
+ALGORITHM Sum_overlapping
+VAR
+    set1 : ARRAY_OF INTEGER[]
+    set2 : ARRAY_OF INTEGER[]
+    i, j :INTEGER;
+    sum_overlp : INTEGER:=0;
+    
+
+BEGIN
+  Write("give the  first set of elemtent");
+   Read(set1);
+   Write("give the second set of elemtent");
+   Read(set2);
+
+   for (i=0, i<set1.length , i++)
+   j==0 
+   while (set1[i]<>set2[j] && j<set2.length)
+   j++
+   if (set1[i]== set2[j])
+   sum_overlp+=set1[i];
+   end if
+   end for
+   for (j=0, j<set2.length , j++)
+   i==0 
+   while (set2[j]<>set1[i] && i<set1.length)
+   i++
+   if (set2[j]==set1[i])
+   sum_overlp+= set2[j];
+   end if
+   end for
+   write("the sum of overlapping elements in two sets: ", sum_overlp);
+   end
+
+
+
+
+
+  
+/* --- solution 4 using hash-table ---*/
+
+ALGORITHM hash_overlp
+VAR
+  
+    htab : HASH_TABLE<INTEGER,INTEGER>;
+    set1 : ARRAY_OF INTEGER[]
+    set2 : ARRAY_OF INTEGER[]
+    i, j : INTEGER;
+    sum_overlp: INTEGER:= 0
+BEGIN
+
+        Write("give the  first set of elemtent");
+        Read(set1);
+        Write("give the second set of elemtent");
+        Read(set2);
+
+        FOR i FROM 0 TO set1.length-1 STEP 1  DO
+                htab.insert(set1[i],1); 
+        END_FOR
+        FOR j FROM 0 TO set2.length-1 STEP 1  DO
+                IF (htab.lookup(set2[j])) THEN
+                        htab.insert(set2[j], 2)
+                ELSE
+                        htab.insert(set2[j], 1)
+                END_IF
+        END_FOR
+
+
+        FOR i FROM 0 TO set2.length-1 STEP 1  DO
+                IF (htab.get(set2[i])=2) THEN
+                        sum_overlp := sum_overlp+ set2[i]*2
+                END_IF
+        END_FOR
+
+        write("The sum of two distinct sets of elements: ", sum_overlp)
+END
+        
